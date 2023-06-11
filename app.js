@@ -1,14 +1,13 @@
-//* ------ Selectors ------ *//
 const selectionArticle = document.querySelector(".selection");
-
-//? Secilen elemanlarin tayicilari
 const yourChoiceDiv = document.getElementById("your-choice");
-
+const pcChoiceDiv = document.getElementById("pc-choice");
 const messagePar = document.querySelector(".message");
-
-const scoreCardSection = document.querySelector(".score-card")
-const pcScoreSpan = document.getElementById("pc-score")
-const yourScoreSpan = document.getElementById("your-score")
+const scoreCardSection = document.querySelector(".score-card");
+const pcScoreSpan = document.getElementById("pc-score");
+const yourScoreSpan = document.getElementById("your-score");
+const modalCardSection = document.querySelector(".modal-card");
+const finalMessagePar = document.getElementById("final-message");
+const playAgainBtn = document.getElementById("play-again");
 
 //* ------ Variables ------ *//
 let userSelectImg = document.createElement("img");
@@ -30,6 +29,10 @@ selectionArticle.addEventListener("click", (e) => {
     }
 });
 
+playAgainBtn.addEventListener("click", () => {
+    modalCardSection.style.display = "none";
+    window.location.reload();
+});
 //* ------ Functions ------ *//
 
 const createPcSelection = () => {
@@ -40,10 +43,7 @@ const createPcSelection = () => {
     yourChoiceDiv.appendChild(pcSelectImg);
     calculateResult();
 };
-
 const calculateResult = () => {
-    // console.log(userSelectImg.alt);
-    // console.log(pcSelectImg.alt);
     if (userSelectImg.alt === pcRandom) {
         draw();
     } else {
@@ -54,6 +54,9 @@ const calculateResult = () => {
         } else if (userSelectImg.alt === "paper") {
             pcRandom === "scissor" ? youLost() : youWin();
         }
+    }
+    if (pcScoreSpan.textContent === "10" || yourScoreSpan.textContent === "10") {
+        openModal();
     }
 };
 
@@ -67,12 +70,25 @@ const youLost = () => {
     messagePar.textContent = "You Lost";
     scoreCardSection.style.color = RED;
     messagePar.style.backgroundColor = RED;
-    pcScoreSpan.textContent++
+    pcScoreSpan.textContent++;
 };
-
 const youWin = () => {
     messagePar.textContent = "You Win";
     scoreCardSection.style.color = GREEN;
     messagePar.style.backgroundColor = GREEN;
     yourScoreSpan.textContent++;
+};
+
+const openModal = () => {
+    modalCardSection.classList.add("show");
+
+    if (yourScoreSpan.textContent === "10") {
+        finalMessagePar.textContent = "💃 You Win🕺";
+        document.querySelector(".modal").style.backgroundColor = GREEN;
+        playAgainBtn.style.color = GREEN;
+    } else {
+        finalMessagePar.textContent = "☹️ You Lost ☹️";
+        document.querySelector(".modal").style.backgroundColor = RED;
+        playAgainBtn.style.color = RED;
+    }
 };
