@@ -6,7 +6,9 @@ const yourChoiceDiv = document.getElementById("your-choice");
 
 const messagePar = document.querySelector(".message");
 
-const scoreCardSection = document.querySelector(".score-card");
+const scoreCardSection = document.querySelector(".score-card")
+const pcScoreSpan = document.getElementById("pc-score")
+const yourScoreSpan = document.getElementById("your-score")
 
 //* ------ Variables ------ *//
 let userSelectImg = document.createElement("img");
@@ -20,7 +22,6 @@ const GREEN = "#5ab7ac";
 //* ------ Even Listeners ------ *//
 
 selectionArticle.addEventListener("click", (e) => {
-    // console.log(e.target.id);
     if (e.target.id) {
         userSelectImg.src = `./assets/${e.target.id}.png`;
         userSelectImg.alt = e.target.id;
@@ -66,10 +67,12 @@ const youLost = () => {
     messagePar.textContent = "You Lost";
     scoreCardSection.style.color = RED;
     messagePar.style.backgroundColor = RED;
+    pcScoreSpan.textContent++
 };
 
 const youWin = () => {
     messagePar.textContent = "You Win";
     scoreCardSection.style.color = GREEN;
     messagePar.style.backgroundColor = GREEN;
+    yourScoreSpan.textContent++;
 };
